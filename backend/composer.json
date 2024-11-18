@@ -1,8 +1,16 @@
 {
-    "name": "laravel/laravel",
+    "name": "lucascorrea31/rpgguildmaker",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "A technical test for a Nacional Inn job.",
+    "keywords": [
+        "laravel",
+        "framework",
+        "test",
+        "technical",
+        "rpg",
+        "guild",
+        "maker"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
