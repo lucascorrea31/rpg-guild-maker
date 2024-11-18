@@ -10,38 +10,65 @@ class GuildController extends Controller
     public function formGuilds(Request $request)
     {
         $players = Player::where('confirmed', true)->get();
+        $numPlayersPerGuild = $request->input('numPlayersPerGuild', 3); // Valor padrão: 3
+        $totalPlayers = $players->count();
 
-        // Separar jogadores por classe
+        if ($totalPlayers < $numPlayersPerGuild) {
+            return response()->json([
+                'error' => 'Número insuficiente de jogadores confirmados.',
+                'suggestion' => [
+                    'minPlayersPerGuild' => $totalPlayers,
+                    'availablePlayers' => $players,
+                ]
+            ], 400);
+        }
+
         $classes = $players->groupBy('class');
 
         $guilds = [];
         while ($players->isNotEmpty()) {
             $guild = collect();
 
-            // Adicionar um Clérigo
-            if (isset($classes['Clérigo']) && $classes['Clérigo']->isNotEmpty()) {
+            if ($guild->count() < $numPlayersPerGuild && isset($classes['Clérigo']) && $classes['Clérigo']->isNotEmpty()) {
                 $guild->push($classes['Clérigo']->shift());
             }
 
-            // Adicionar um Guerreiro
-            if (isset($classes['Guerreiro']) && $classes['Guerreiro']->isNotEmpty()) {
+            if ($guild->count() < $numPlayersPerGuild && isset($classes['Guerreiro']) && $classes['Guerreiro']->isNotEmpty()) {
                 $guild->push($classes['Guerreiro']->shift());
             }
 
-            // Adicionar um Mago ou Arqueiro
-            if ((isset($classes['Mago']) && $classes['Mago']->isNotEmpty())) {
-                $guild->push($classes['Mago']->shift());
-            } elseif (isset($classes['Arqueiro']) && $classes['Arqueiro']->isNotEmpty()) {
-                $guild->push($classes['Arqueiro']->shift());
+            if ($guild->count() < $numPlayersPerGuild) {
+                if (isset($classes['Mago']) && $classes['Mago']->isNotEmpty()) {
+                    $guild->push($classes['Mago']->shift());
+                } elseif (isset($classes['Arqueiro']) && $classes['Arqueiro']->isNotEmpty()) {
+                    $guild->push($classes['Arqueiro']->shift());
+                }
             }
+
+            $players = $players->filter(function ($player) use ($guild) {
+                return !$guild->contains($player);
+            })->flatten();
+
+            while ($guild->count() < $numPlayersPerGuild && $players->isNotEmpty()) {
+                $guild->push($players->shift());
+            }
+
+            $guild = $guild->unique();
 
             // Balancear XP
             $guildXp = $guild->sum('xp');
             $guilds[] = ['guild' => $guild, 'xp' => $guildXp];
 
-            $players = $players->filter(function ($player) use ($guild) {
-                return !$guild->contains($player);
-            });
+            // Se a guilda formada não tiver o número correto de jogadores, retorna erro
+            if ($guild->count() < $numPlayersPerGuild) {
+                return response()->json([
+                    'error' => 'Número insuficiente de jogadores para completar guildas ideais.',
+                    'suggestion' => [
+                        'formedGuilds' => $guilds,
+                        'remainingPlayers' => $players,
+                    ]
+                ], 400);
+            }
         }
 
         return response()->json(['guilds' => $guilds]);
