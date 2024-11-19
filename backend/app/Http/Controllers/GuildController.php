@@ -53,6 +53,8 @@ class GuildController extends Controller
                 $guild->push($players->shift());
             }
 
+            $classes = $players->groupBy('class');
+
             $guild = $guild->unique();
 
             $guildXp = $guild->sum('xp');
