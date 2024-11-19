@@ -20,7 +20,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "http://rpg-guild-maker-backend.vercel.app",
+        "APP_URL": "https://rpg-guild-maker-backend-qmcc9njsu.vercel.app",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
