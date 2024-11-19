@@ -50,6 +50,7 @@ class PlayerController extends Controller
         ]);
 
         $player->update($request->all());
+
         return $player;
     }
 
@@ -59,6 +60,7 @@ class PlayerController extends Controller
     public function destroy(Player $player)
     {
         $player->delete();
+
         return response()->noContent();
     }
 }

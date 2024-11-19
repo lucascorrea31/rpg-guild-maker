@@ -19,7 +19,7 @@ class GuildController extends Controller
                 'suggestion' => [
                     'minPlayersPerGuild' => $totalPlayers,
                     'availablePlayers' => $players,
-                ]
+                ],
             ], 400);
         }
 
@@ -46,7 +46,7 @@ class GuildController extends Controller
             }
 
             $players = $players->filter(function ($player) use ($guild) {
-                return !$guild->contains($player);
+                return ! $guild->contains($player);
             })->flatten();
 
             while ($guild->count() < $numPlayersPerGuild && $players->isNotEmpty()) {
@@ -67,7 +67,7 @@ class GuildController extends Controller
                     'suggestion' => [
                         'formedGuilds' => $guilds,
                         'remainingPlayers' => $players,
-                    ]
+                    ],
                 ], 400);
             }
         }
