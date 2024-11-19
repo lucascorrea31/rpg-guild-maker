@@ -12,19 +12,16 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                 php-version: '8.2'
-
-            - name: Goes to backend folder
-              run: cd backend
               
             - name: Install Vercel CLI
-              run: npm install --global vercel@latest
+              run: cd backend && npm install --global vercel@latest
 
             - name: Install Dependencies
-              run: composer install
+              run: cd backend && composer install
 
             - name: Migrate DB
               run: |
-                php artisan migrate --force
+                cd backend && php artisan migrate --force
               env:
                 APP_ENV: production
                 DB_CONNECTION: sqlite
@@ -33,7 +30,7 @@ jobs:
                 MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
 
             - name: Deploy to Vercel
-              run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+              run: cd backend && vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
               env:
                 VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
                 VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
