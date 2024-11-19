@@ -10,7 +10,7 @@ class GuildController extends Controller
     public function formGuilds(Request $request)
     {
         $players = Player::where('confirmed', true)->get();
-        $numPlayersPerGuild = $request->input('numPlayersPerGuild', 3); // Valor padrão: 3
+        $numPlayersPerGuild = $request->input('numPlayersPerGuild', 3);
         $totalPlayers = $players->count();
 
         if ($totalPlayers < $numPlayersPerGuild) {
@@ -55,7 +55,6 @@ class GuildController extends Controller
 
             $guild = $guild->unique();
 
-            // Balancear XP
             $guildXp = $guild->sum('xp');
             $guilds[] = ['guild' => $guild, 'xp' => $guildXp];
 
