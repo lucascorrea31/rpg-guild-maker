@@ -12,6 +12,7 @@ import {
 } from "./ui/card";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { Checkbox } from "./ui/checkbox";
 import {
 	Select,
 	SelectContent,
@@ -46,7 +47,7 @@ const PlayerForm = ({ onPlayerAdded }) => {
 	};
 
 	return (
-		<Card className="w-[350px]">
+		<Card className="min-w-[300px] max-w-[40%]">
 			<CardHeader>
 				<CardTitle>Cadastro</CardTitle>
 				<CardDescription>
@@ -96,16 +97,18 @@ const PlayerForm = ({ onPlayerAdded }) => {
 								max="100"
 							/>
 						</div>
-						<div className="flex flex-col space-y-1.5">
-							<Label htmlFor="confirmed">
-								Confirmado
-								<Input
-									id="confirmed"
-									type="checkbox"
-									checked={confirmed}
-									onChange={(e) => setConfirmed(e.target.checked)}
-								/>
-							</Label>
+						<div className="items-top flex space-x-2">
+							<Checkbox
+								id="confirmed"
+								onChange={(e) => setConfirmed(e.target.checked)}
+							/>
+							<div className="grid gap-1.5 leading-none">
+								<label
+									htmlFor="confirmed"
+									className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+									Confirmado
+								</label>
+							</div>
 						</div>
 					</div>
 				</form>
