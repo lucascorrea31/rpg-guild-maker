@@ -16,10 +16,7 @@ jobs:
             - name: Install Vercel CLI
               run: cd backend && npm install --global vercel@latest
 
-            - name: Install Dependencies Front
-              run: cd backend && npm install
-              
-            - name: Install Dependencies Back
+            - name: Install Dependencies
               run: cd backend && composer install
 
             - name: Migrate DB
