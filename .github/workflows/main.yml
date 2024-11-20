@@ -26,6 +26,8 @@ jobs:
                 APP_ENV: production
                 DB_CONNECTION: sqlite
                 DB_HOST: ${{ secrets.DB_HOST }}
+                DB_USER: ${{ secrets.DB_USER }}
+                DB_PASS: ${{ secrets.DB_PASSWORD }}
                 DB_PORT: 3306
                 MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
 
