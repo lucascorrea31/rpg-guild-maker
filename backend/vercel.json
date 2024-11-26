@@ -20,7 +20,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://rpg-guild-maker-backend-qmcc9njsu.vercel.app",
+        "APP_URL": "https://rpg-guild-maker-backend.vercel.app",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
@@ -31,6 +31,9 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
         "DB_CONNECTION": "sqlite",
+        "DB_HOST": "",
+        "DB_USERNAME": "",
+        "DB_PASSWORD": "",
         "DB_PORT": "3306",
         "MYSQL_ATTR_SSL_CA": "/etc/pki/tls/certs/ca-bundle.crt"
     }
